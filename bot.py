@@ -36,6 +36,12 @@ bot = commands.Bot(command_prefix='d.')
         
 bot.blacklist = []
 
+startup_extensions = [
+
+    'cogs.Owner'
+
+]
+
 
 def dev_check(id):
     with open('data/devs.json') as f:
@@ -133,6 +139,17 @@ async def on_ready():
         print("ID : {}".format(bot.user.id))
         print("Py Lib Version: %s"%discord.__version__)
         print("----------------")
+
+        
+if __name__ == "__main__":
+    for extension in startup_extensions:
+        try:
+            bot.load_extension(extension)
+            print('Loaded extension: {}'.format(extension))
+        except Exception as e:
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load extension {}\n{}'.format(extension, exc))
+
 
 if not os.environ.get('TOKEN'):
     print("no token found!")
