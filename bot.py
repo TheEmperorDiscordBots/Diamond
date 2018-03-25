@@ -34,6 +34,7 @@ from contextlib import redirect_stdout
 from utils.config import *
 from ext import utils
 from pyfiglet import figlet_format as ascii_format
+
 bot = commands.Bot(command_prefix='d.')
         
 bot.blacklist = []
