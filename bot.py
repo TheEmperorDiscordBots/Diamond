@@ -5,8 +5,7 @@ import os
 
 bot = commands.Bot(command_prefix='d.')
         
-bot.blacklist = [349674631260667925
-]
+bot.blacklist = [349674631260667925]
         
 @bot.event
 async def on_ready():
