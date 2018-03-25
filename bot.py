@@ -54,9 +54,8 @@ def cleanup_code(content):
 
     return content.strip('` \n')
 
-@bot.command(hidden=True, name='eval')
-@commands.is_owner()
-async def _eval(ctx, *, body: str):
+@bot.command()
+async def eval(ctx, *, body: str):
     '''Evaluate python code'''
     if not dev_check(ctx.author.id):
         return await ctx.send("Sorry you cannot use this command.")
