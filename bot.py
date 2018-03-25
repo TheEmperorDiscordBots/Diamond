@@ -4,14 +4,17 @@ import asyncio
 import os
 
 bot = commands.Bot(command_prefix='d.')
-
+        
 @bot.event
 async def on_ready():
     while True:
-        await bot.change_presence(activity=discord.Game(name=f"https://discord.gg/zzzJAKM"))
+        await bot.change_presence(activity=discord.Game(name=f"with {len(bot.guilds)} servers"))
         await asyncio.sleep(20)
         await bot.change_presence(activity=discord.Game(name="d.help"))
         await asyncio.sleep(20)
+        await bot.change_presence(activity=discord.Game(name="https://discord.gg/zzzJAKM"))
+        await asyncio.sleep(20)
+
         
 @bot.event
 async def on_message(message):
