@@ -38,7 +38,8 @@ bot.blacklist = []
 
 startup_extensions = [
 
-    'cogs.Owner'
+    'cogs.Owner',
+    'cogs.Errorhandler'
 
 ]
 
