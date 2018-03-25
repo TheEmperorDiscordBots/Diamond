@@ -4,6 +4,21 @@ import os
 
 bot = commands.Bot(command_prefix='d.')
 
+@bot.event
+async def on_ready():
+    while True:
+        await bot.change_presence(activity=discord.Game(name=f"(insert server inv here)"))
+        await asyncio.sleep(20)
+        await bot.change_presence(activity=discord.Game(name="d.help"))
+        await asyncio.sleep(20)
+        
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
+
+    await bot.process_commands(message)
+
 
 @bot.event
 async def on_ready():
