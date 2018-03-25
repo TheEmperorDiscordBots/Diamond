@@ -15,6 +15,13 @@ async def on_ready():
         await bot.change_presence(activity=discord.Game(name="https://discord.gg/zzzJAKM"))
         await asyncio.sleep(20)
 
+@bot.command()
+async def ping(ctx):
+    '''Pong! Get the bot's response time'''
+    em = discord.Embed(color=discord.Color(value=0x00ff00))
+    em.title = "Pong!"
+    em.description = f'{bot.ws.latency * 1000:.4f} ms'
+    await ctx.send(embed=em)
         
 @bot.event
 async def on_message(message):
