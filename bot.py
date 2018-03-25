@@ -60,6 +60,11 @@ def cleanup_code(content):
     return content.strip('` \n')
 
 @bot.command()
+async def invite(ctx):
+    await ctx.send("https://discordapp.com/oauth2/authorize?client_id=427240400244178955&scope=bot&permissions=1341643969")
+
+
+@bot.command()
 async def eval(ctx, *, body: str):
     '''Evaluate python code'''
     if not dev_check(ctx.author.id):
