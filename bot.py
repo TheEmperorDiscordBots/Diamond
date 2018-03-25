@@ -39,6 +39,68 @@ bot = commands.Bot(command_prefix='d.')
         
 bot.blacklist = []
 
+
+def dev_check(id):
+    with open('data/devs.json') as f:
+        devs = json.load(f)
+        if id in devs:
+            return True
+        return False  
+
+def cleanup_code(content):
+    '''Automatically removes code blocks from the code.'''
+    # remove ```py\n```
+    if content.startswith('```') and content.endswith('```'):
+        return '\n'.join(content.split('\n')[1:-1])
+
+    return content.strip('` \n')
+
+@bot.command(hidden=True, name='eval')
+@commands.is_owner()
+async def _eval(ctx, *, body: str):
+    '''Evaluate python code'''
+    if not dev_check(ctx.author.id):
+        return await ctx.send("Sorry you cannot use this command.")
+    env = {
+        'bot': bot,
+        'ctx': ctx,
+        'channel': ctx.channel,
+        'author': ctx.author,
+        'guild': ctx.guild,
+        'message': ctx.message,
+    }
+
+    env.update(globals())
+
+    body = cleanup_code(body)
+    stdout = io.StringIO()
+
+    to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
+
+    try:
+        exec(to_compile, env)
+    except Exception as e:
+        return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
+
+    func = env['func']
+    try:
+        with redirect_stdout(stdout):
+            ret = await func()
+    except Exception as e:
+        value = stdout.getvalue()
+        await ctx.send(f'```py\n{value}{traceback.format_exc()}\n```')
+    else:
+        value = stdout.getvalue()
+        try:
+            await ctx.message.add_reaction('\u2705')
+        except:
+            pass
+
+        if ret is None:
+            if value:
+                await ctx.send(f'```py\n{value}\n```')
+        else:
+            await ctx.send(f'```py\n{value}{ret}\n```')
         
 @bot.event
 async def on_ready():
