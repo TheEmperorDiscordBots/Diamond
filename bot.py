@@ -8,7 +8,6 @@ import datetime
 import sys
 import psutil
 import asyncpg
-from settings import settings
 from pymongo import MongoClient
 import requests
 import ftfy
