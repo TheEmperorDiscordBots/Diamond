@@ -5,6 +5,9 @@ import os
 
 bot = commands.Bot(command_prefix='d.')
         
+bot.blacklist = [349674631260667925
+]
+        
 @bot.event
 async def on_ready():
     while True:
@@ -24,11 +27,10 @@ async def ping(ctx):
     await ctx.send(embed=em)
         
 @bot.event
-async def on_message(message):
-    if message.author.bot:
-        return
-
-    await bot.process_commands(message)
+async def on_message(msg):
+    if not msg.author.bot:
+        if not str(msg.author.id) in bot.blacklist:
+            await bot.process_commands(msg)
 
 
 @bot.event
