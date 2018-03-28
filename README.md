@@ -1,4 +1,2 @@
 # Diamond
-
-
-tesafddsf
+There will be no more updates on this github 
