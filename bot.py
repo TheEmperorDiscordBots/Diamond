@@ -63,59 +63,13 @@ def cleanup_code(content):
 async def invite(ctx):
     await ctx.send("https://discordapp.com/oauth2/authorize?client_id=427240400244178955&scope=bot&permissions=1341643969")
 
-
-@bot.command()
-async def eval(ctx, *, body: str):
-    '''Evaluate python code'''
-    if not dev_check(ctx.author.id):
-        return await ctx.send("Sorry you cannot use this command.")
-    env = {
-        'bot': bot,
-        'ctx': ctx,
-        'channel': ctx.channel,
-        'author': ctx.author,
-        'guild': ctx.guild,
-        'message': ctx.message,
-    }
-
-    env.update(globals())
-
-    body = cleanup_code(body)
-    stdout = io.StringIO()
-
-    to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
-
-    try:
-        exec(to_compile, env)
-    except Exception as e:
-        return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
-
-    func = env['func']
-    try:
-        with redirect_stdout(stdout):
-            ret = await func()
-    except Exception as e:
-        value = stdout.getvalue()
-        await ctx.send(f'```py\n{value}{traceback.format_exc()}\n```')
-    else:
-        value = stdout.getvalue()
-        try:
-            await ctx.message.add_reaction('\u2705')
-        except:
-            pass
-
-        if ret is None:
-            if value:
-                await ctx.send(f'```py\n{value}\n```')
-        else:
-            await ctx.send(f'```py\n{value}{ret}\n```')
         
 @bot.event
 async def on_ready():
     while True:
         await bot.change_presence(activity=discord.Game(name=f"with {len(bot.guilds)} servers!"))
         await asyncio.sleep(20)
-        await bot.change_presence(activity=discord.Game(name="d.help!"))
+        await bot.change_presence(activity=discord.Game(name="=help"))
         await asyncio.sleep(20)
         await bot.change_presence(activity=discord.Game(name="https://discord.gg/zzzJAKM"))
         await asyncio.sleep(20)
