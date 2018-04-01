@@ -32,7 +32,7 @@ from contextlib import redirect_stdout
 from utils.config import *
 from pyfiglet import figlet_format as ascii_format
 
-bot = commands.Bot(command_prefix='d.')
+bot = commands.Bot(command_prefix='=')
         
 bot.blacklist = []
 
@@ -61,7 +61,7 @@ def cleanup_code(content):
 
 @bot.command()
 async def invite(ctx):
-    await ctx.send("https://discordapp.com/oauth2/authorize?client_id=427240400244178955&scope=bot&permissions=1341643969")
+    await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=430124797838491678&permissions=0&scope=bot")
 
         
 @bot.event
